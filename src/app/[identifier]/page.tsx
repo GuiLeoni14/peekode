@@ -30,7 +30,7 @@ export default async function IdentifierPage({ params }: IdentifierPageProps) {
     <div className="container mx-auto py-8 px-4 max-w-4xl">
       <div className="space-y-6">
         <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">PeekCode</h1>
+          <h1 className="text-3xl font-bold tracking-tight">PeeKode</h1>
           <p className="text-muted-foreground">
             Veja, copie e cole com facilidade
           </p>
