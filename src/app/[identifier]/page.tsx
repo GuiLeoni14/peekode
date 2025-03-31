@@ -25,11 +25,12 @@ export default async function IdentifierPage({ params }: IdentifierPageProps) {
   if (!code) {
     notFound();
   }
+  
   return (
     <div className="container mx-auto py-8 px-4 max-w-4xl">
       <div className="space-y-6">
         <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">Code Editor</h1>
+          <h1 className="text-3xl font-bold tracking-tight">PeekCode</h1>
           <p className="text-muted-foreground">
             Veja, copie e cole com facilidade
           </p>
@@ -44,7 +45,8 @@ export default async function IdentifierPage({ params }: IdentifierPageProps) {
           </CardContent>
         </Card>
 
-        <div className="text-center text-sm text-muted-foreground">
+        <div className="text-center text-sm text-muted-foreground flex items-center justify-between">
+          <span>Visualizando <strong>{code.identifier}</strong></span>
           <p>Feito com ❤️ e Next.js com supabase-realtime</p>
         </div>
       </div>

@@ -5,17 +5,16 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ExternalLink } from "lucide-react";
-import Link from "next/link";
 import { getCodeByIdentifier } from "./[identifier]/page";
 
-async function getInitialCode(){
+async function getInitialCode() {
   const session = await auth();
-  if(!session?.user.username){
-    return null
+  if (!session?.user.username) {
+    return null;
   }
 
   const code = await getCodeByIdentifier(session?.user.username);
-  return code?.content ?? null
+  return code?.content ?? null;
 }
 
 export default async function Home() {
@@ -83,18 +82,19 @@ export default async function Home() {
             <CodeEditor initialCode={initialCode} />
           </CardContent>
         </Card>
-
         <div className="text-center text-sm text-muted-foreground flex items-center justify-between">
           {session?.user.username
             ? (
-              <Link
+              <a
                 className="flex items-center cursor-pointer"
                 href={`/${session?.user.username}`}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Preview
                 <ExternalLink className="mx-2 size-4 dark:invert" />
                 peekode.vercel.app/{session?.user.username}
-              </Link>
+              </a>
             )
             : <span></span>}
           <p>Feito com ❤️ e Next.js com supabase-realtime</p>

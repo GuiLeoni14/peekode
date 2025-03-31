@@ -3,6 +3,9 @@ import { supabase } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 import { javascript } from "@codemirror/lang-javascript";
 import CodeMirror from "@uiw/react-codemirror";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Copy } from "lucide-react";
 
 interface CodeHighlighterProps {
   identifier: string;
@@ -11,8 +14,20 @@ interface CodeHighlighterProps {
 export function CodeHighlighter(
   { initialCode, identifier }: CodeHighlighterProps,
 ) {
-  const [actualCode, setActualCode] = useState(initialCode ?? '');
+  const [actualCode, setActualCode] = useState(initialCode ?? "");
 
+  async function handleCopyCode() {
+    try {
+      await navigator.clipboard.writeText(actualCode);
+      toast.success("Código copiado!", {
+        description: "Agora você pode colá-lo onde quiser.",
+      });
+    } catch {
+      toast.error("Erro ao copiar", {
+        description: "Não foi possível copiar o código.",
+      });
+    }
+  }
   useEffect(() => {
     const channel = supabase
       .channel(`realtime code-snippets`)
@@ -32,14 +47,22 @@ export function CodeHighlighter(
   }, [identifier]);
 
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col">
+      <Button
+        className="cursor-pointer ml-auto"
+        variant="ghost"
+        onClick={handleCopyCode}
+      >
+        Copiar
+        <Copy className="w-4 h-4" />
+      </Button>
       <CodeMirror
         value={actualCode}
         height="auto"
         extensions={[javascript()]}
         editable={false}
         readOnly={true}
-        className="border rounded-lg"
+        className="border rounded-lg mt-2 max-h-[60vh] overflow-auto"
       />
     </div>
   );
