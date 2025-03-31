@@ -17,6 +17,9 @@ datasource db {
 model CodeSnippet {
   id         String   @id @default(uuid())
   identifier String   @unique
-  content    String
-  updatedAt  DateTime @updatedAt
+  content    String?
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("code_snippets")
 }

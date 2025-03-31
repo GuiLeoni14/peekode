@@ -3,28 +3,28 @@ import { notFound } from "next/navigation";
 import { CodeHighlighter } from "./code-highlighter";
 import { Card, CardContent } from "@/components/ui/card";
 
-async function getCodeByIdentifier(identifier: string) {
+export async function getCodeByIdentifier(identifier: string) {
   const code = await prisma.codeSnippet.findUnique({
     where: {
       identifier,
     },
   });
 
-  if (!code) {
-    notFound();
-  }
   return code;
 }
 
 interface IdentifierPageProps {
   params: Promise<{
     identifier: string;
-  }>
+  }>;
 }
 
 export default async function IdentifierPage({ params }: IdentifierPageProps) {
-  const { identifier } = await params
+  const { identifier } = await params;
   const code = await getCodeByIdentifier(identifier);
+  if (!code) {
+    notFound();
+  }
   return (
     <div className="container mx-auto py-8 px-4 max-w-4xl">
       <div className="space-y-6">

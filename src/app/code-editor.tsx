@@ -7,13 +7,16 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 
-export function CodeEditor() {
-  const [code, setCode] = useState("// Escreva seu código aqui...");
+interface CodeEditorProps {
+  initialCode?: string | null
+}
+export function CodeEditor({ initialCode }: CodeEditorProps) {
+  const [code, setCode] = useState(initialCode ?? "// Escreva seu código aqui...");
   const session = useSession();
   const debouncedCode = useDebounce(code, 1000); // Salva após 1 segundo sem alterações
 
   useEffect(() => {
-    if (debouncedCode && debouncedCode !== "// Escreva seu código aqui...") {
+    if (debouncedCode !== "// Escreva seu código aqui..." && debouncedCode !== initialCode) {
       fetch("/api/code", {
         method: "POST",
         headers: {
@@ -28,7 +31,7 @@ export function CodeEditor() {
         toast.error("Erro ao salvar.");
       });
     }
-  }, [debouncedCode]);
+  }, [debouncedCode, initialCode]);
 
   return (
     <div className="w-full">

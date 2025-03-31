@@ -6,9 +6,22 @@ import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { getCodeByIdentifier } from "./[identifier]/page";
+
+async function getInitialCode(){
+  const session = await auth();
+  if(!session?.user.username){
+    return null
+  }
+
+  const code = await getCodeByIdentifier(session?.user.username);
+  return code?.content ?? null
+}
 
 export default async function Home() {
   const session = await auth();
+  const initialCode = await getInitialCode();
+
   return (
     <div className="container mx-auto py-8 px-4 max-w-4xl">
       <div className="space-y-6">
@@ -67,7 +80,7 @@ export default async function Home() {
           )}
         <Card className="border shadow-md">
           <CardContent>
-            <CodeEditor />
+            <CodeEditor initialCode={initialCode} />
           </CardContent>
         </Card>
 

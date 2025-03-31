@@ -6,21 +6,21 @@ import CodeMirror from "@uiw/react-codemirror";
 
 interface CodeHighlighterProps {
   identifier: string;
-  initialCode: string;
+  initialCode: string | null;
 }
 export function CodeHighlighter(
   { initialCode, identifier }: CodeHighlighterProps,
 ) {
-  const [actualCode, setActualCode] = useState(initialCode);
+  const [actualCode, setActualCode] = useState(initialCode ?? '');
 
   useEffect(() => {
     const channel = supabase
-      .channel(`realtime code-snippet`)
+      .channel(`realtime code-snippets`)
       .on("postgres_changes", {
         event: "UPDATE",
         schema: "public",
         filter: `identifier=eq.${identifier}`,
-        table: "CodeSnippet",
+        table: "code_snippets",
       }, (payload) => {
         setActualCode(payload.new.content);
       })

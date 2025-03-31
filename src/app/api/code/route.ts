@@ -14,10 +14,6 @@ export async function POST(req: Request) {
 
     const { content } = await req.json();
     
-    if (!content) {
-      return NextResponse.json({ success: false, error: "Dados inválidos" }, { status: 400 });
-    }
-
     const codeSnippet = await prisma.codeSnippet.upsert({
       where: { identifier: session.user.username },
       update: { content, updatedAt: new Date() },
