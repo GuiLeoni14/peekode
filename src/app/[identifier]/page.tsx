@@ -17,13 +17,14 @@ async function getCodeByIdentifier(identifier: string) {
 }
 
 interface IdentifierPageProps {
-  params: {
+  params: Promise<{
     identifier: string;
-  };
+  }>
 }
 
 export default async function IdentifierPage({ params }: IdentifierPageProps) {
-  const code = await getCodeByIdentifier(params.identifier);
+  const { identifier } = await params
+  const code = await getCodeByIdentifier(identifier);
   return (
     <div className="container mx-auto py-8 px-4 max-w-4xl">
       <div className="space-y-6">
@@ -38,7 +39,7 @@ export default async function IdentifierPage({ params }: IdentifierPageProps) {
           <CardContent>
             <CodeHighlighter
               initialCode={code.content}
-              identifier={params.identifier}
+              identifier={identifier}
             />
           </CardContent>
         </Card>

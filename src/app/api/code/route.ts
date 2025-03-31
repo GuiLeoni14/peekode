@@ -2,19 +2,26 @@
 
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
 
 export async function POST(req: Request) {
   try {
-    const { identifier, content } = await req.json();
+    const session = await auth()
 
-    if (!identifier || !content) {
+    if(!session?.user.username){
+      return NextResponse.json({ success: false, error: "Não autorizado" }, { status: 401 });
+    }
+
+    const { content } = await req.json();
+    
+    if (!content) {
       return NextResponse.json({ success: false, error: "Dados inválidos" }, { status: 400 });
     }
 
     const codeSnippet = await prisma.codeSnippet.upsert({
-      where: { identifier },
+      where: { identifier: session.user.username },
       update: { content, updatedAt: new Date() },
-      create: { identifier, content },
+      create: { identifier: session.user.username, content },
     });
 
     return NextResponse.json({ success: true, data: codeSnippet }, { status: 200 });
