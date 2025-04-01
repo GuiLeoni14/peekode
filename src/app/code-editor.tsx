@@ -45,8 +45,8 @@ export function CodeEditor({ initialCode }: CodeEditorProps) {
           content: debouncedCode,
         }),
       }).then((response) => {
-        if(!response.ok){
-          throw new Error(response.statusText);
+        if (!response.ok) {
+          return Promise.reject(new Error(response.statusText));
         }
         setIsSavingCode({
           success: true,
