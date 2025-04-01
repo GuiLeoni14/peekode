@@ -44,7 +44,10 @@ export function CodeEditor({ initialCode }: CodeEditorProps) {
         body: JSON.stringify({
           content: debouncedCode,
         }),
-      }).then(() => {
+      }).then((response) => {
+        if(!response.ok){
+          throw new Error(response.statusText);
+        }
         setIsSavingCode({
           success: true,
           loading: false,
