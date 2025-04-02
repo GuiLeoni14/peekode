@@ -16,7 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "PeeKode - Compartilhe seu código",
-  description: "Escreva, edite e compartilhe código com facilidade.",
+  description:
+    "Crie e compartilhe snippets de código em tempo real. Gere, edite e distribua facilmente seus trechos de código com atualização instantânea.",
 };
 
 export default function RootLayout({

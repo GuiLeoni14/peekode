@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ExternalLink } from "lucide-react";
 import { getCodeByIdentifier } from "./[identifier]/page";
 import { Logo } from "@/components/logo";
+import { Credits } from "@/components/credits";
 
 async function getInitialCode() {
   const session = await auth();
@@ -98,7 +99,7 @@ export default async function Home() {
               </a>
             )
             : <span></span>}
-          <p>Feito com ❤️ e Next.js com supabase-realtime</p>
+          <Credits />
         </div>
       </div>
     </div>

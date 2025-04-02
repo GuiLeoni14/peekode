@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { CodeHighlighter } from "./code-highlighter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Logo } from "@/components/logo";
+import { Credits } from "@/components/credits";
 
 export async function getCodeByIdentifier(identifier: string) {
   const code = await prisma.codeSnippet.findUnique({
@@ -50,7 +51,7 @@ export default async function IdentifierPage({ params }: IdentifierPageProps) {
           <span>
             Visualizando <strong>{code.identifier}</strong>
           </span>
-          <p>Feito com ❤️ e Next.js com supabase-realtime</p>
+          <Credits />
         </div>
       </div>
     </div>
