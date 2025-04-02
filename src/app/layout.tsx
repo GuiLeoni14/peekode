@@ -26,6 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt">
+      <link rel="icon" href="/assets/peekodedark.svg" type="image/svg+xml" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

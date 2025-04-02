@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ExternalLink } from "lucide-react";
 import { getCodeByIdentifier } from "./[identifier]/page";
+import { Logo } from "@/components/logo";
 
 async function getInitialCode() {
   const session = await auth();
@@ -24,8 +25,8 @@ export default async function Home() {
   return (
     <div className="container mx-auto py-8 px-4 max-w-4xl">
       <div className="space-y-6">
-        <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">PeeKode</h1>
+        <div className="text-center space-y-2 flex flex-col items-center justify-center">
+          <Logo />
           <p className="text-muted-foreground">
             Escreva, edite e compartilhe com facilidade
           </p>
