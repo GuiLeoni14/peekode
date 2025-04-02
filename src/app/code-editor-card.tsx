@@ -18,8 +18,9 @@ export function CodeEditorCardFallback() {
     <Card className="border shadow-md">
       <CardContent>
         <div className="h-[60px] flex flex-col gap-2">
-          <div className="w-full h-[10%] max-w-[10%] bg-gray-300 rounded animate-pulse">
-          </div>
+          <span className="text-sm text-muted-foreground">
+            Comece a editar
+          </span>
           <div className="w-full h-[90%] bg-gray-300 rounded animate-pulse">
           </div>
         </div>

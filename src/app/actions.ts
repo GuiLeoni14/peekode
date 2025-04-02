@@ -4,7 +4,7 @@ import { getCodeByIdentifier } from "./[identifier]/page";
 
 export async function getInitialCode() {
   const session = await auth();
-  
+
   if (!session?.user.username) {
     return null;
   }
