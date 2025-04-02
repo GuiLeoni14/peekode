@@ -4,9 +4,13 @@ export function Credits() {
   return (
     <div className="flex items-center gap-2 text-center text-sm text-muted-foreground">
       <p>
-        Feito com ❤️ e Next.js com supabase-realtime
+        Feito com ❤️ usando Next.js e Supabase Realtime.
       </p>
-      <a href="https://github.com/GuiLeoni14/peekode" target="_blank" rel="noopener noreferrer">
+      <a
+        href="https://github.com/GuiLeoni14/peekode"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <Image
           src="/assets/github-icon.svg"
           width={16}
