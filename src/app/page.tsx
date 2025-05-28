@@ -8,7 +8,14 @@ import { Credits } from "@/components/credits";
 import { CodeEditorCard, CodeEditorCardFallback } from "./code-editor-card";
 import { Suspense } from "react";
 
-export default async function Home() {
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+interface HomeProps {
+  searchParams: SearchParams;
+}
+export default async function Home(props: HomeProps) {
+  const searchParams = await props.searchParams;
+  const tabName = searchParams.tab;
+
   const session = await auth();
 
   return (
@@ -68,20 +75,32 @@ export default async function Home() {
             </form>
           )}
         <Suspense fallback={<CodeEditorCardFallback />}>
-          <CodeEditorCard />
+          <CodeEditorCard activeTabName={tabName} />
         </Suspense>
         <div className="text-center text-sm text-muted-foreground flex items-center justify-between">
           {session?.user.username
             ? (
               <a
                 className="flex items-center cursor-pointer"
-                href={`/${session?.user.username}`}
+                href={tabName
+                  ? `/${session?.user.username}?tab=${tabName}`
+                  : `/${session?.user.username}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Preview
                 <ExternalLink className="mx-2 size-4 dark:invert" />
-                peekode.vercel.app/{session?.user.username}
+                {tabName
+                  ? (
+                    <>
+                      peekode.vercel.app/{session?.user.username}?tab={tabName}
+                    </>
+                  )
+                  : (
+                    <>
+                      peekode.vercel.app/{session?.user.username}
+                    </>
+                  )}
               </a>
             )
             : <span></span>}

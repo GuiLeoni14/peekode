@@ -6,13 +6,15 @@ import CodeMirror from "@uiw/react-codemirror";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Copy } from "lucide-react";
+import type { CodeTab } from "@prisma/client";
 
 interface CodeHighlighterProps {
   identifier: string;
+  tabs: CodeTab[];
   initialCode: string | null;
 }
 export function CodeHighlighter(
-  { initialCode, identifier }: CodeHighlighterProps,
+  { initialCode, identifier, tabs }: CodeHighlighterProps,
 ) {
   const [actualCode, setActualCode] = useState(initialCode ?? "");
 
@@ -48,6 +50,20 @@ export function CodeHighlighter(
 
   return (
     <div className="w-full flex flex-col">
+     <div className="flex gap-2">
+       <div className="max-w-[80%] overflow-auto whitespace-nowrap">
+        {tabs.filter((tab) => tab.content).map((tab) => {
+          return (
+            <a
+              key={tab.id}
+              href={`/${identifier}?tab=${tab.name}`}
+              className="mr-2"
+            >
+              <Button variant="outline" size="sm">{tab.name}</Button>
+            </a>
+          );
+        })}
+      </div>
       <Button
         className="cursor-pointer ml-auto"
         variant="ghost"
@@ -56,6 +72,7 @@ export function CodeHighlighter(
         Copiar
         <Copy className="w-4 h-4" />
       </Button>
+     </div>
       <CodeMirror
         value={actualCode}
         height="auto"

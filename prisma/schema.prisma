@@ -15,11 +15,25 @@ datasource db {
 }
 
 model CodeSnippet {
-  id         String   @id @default(uuid())
-  identifier String   @unique
+  id         String    @id @default(uuid())
+  identifier String    @unique
   content    String?
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  codeTabs   CodeTab[]
 
   @@map("code_snippets")
+}
+
+model CodeTab {
+  id            String      @id @default(uuid())
+  name          String      @unique
+  content       String?
+  codeSnippetId String
+  codeSnippet   CodeSnippet @relation(fields: [codeSnippetId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("code_tabs")
 }

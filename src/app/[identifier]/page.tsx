@@ -1,14 +1,22 @@
 import { prisma } from "@/lib/prisma";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { CodeHighlighter } from "./code-highlighter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Logo } from "@/components/logo";
 import { Credits } from "@/components/credits";
+import type { SearchParams } from "next/dist/server/request/search-params";
 
 export async function getCodeByIdentifier(identifier: string) {
   const code = await prisma.codeSnippet.findUnique({
     where: {
       identifier,
+    },
+    include: {
+      codeTabs: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
     },
   });
 
@@ -19,13 +27,31 @@ interface IdentifierPageProps {
   params: Promise<{
     identifier: string;
   }>;
+  searchParams: Promise<SearchParams>;
 }
 
-export default async function IdentifierPage({ params }: IdentifierPageProps) {
+export default async function IdentifierPage(
+  { params, ...props }: IdentifierPageProps,
+) {
   const { identifier } = await params;
+  const searchParams = await props.searchParams;
+  const activeTabName = searchParams.tab;
+
   const code = await getCodeByIdentifier(identifier);
   if (!code) {
     notFound();
+  }
+
+  const activeTab = code.codeTabs.find((tab) => {
+    return tab.name === activeTabName;
+  }) ?? code.codeTabs[0];
+
+  if (!activeTab || !activeTab.content) {
+    notFound();
+  }
+
+  if (activeTab && !activeTabName) {
+    return redirect(`/${identifier}?tab=${activeTab.name}`);
   }
 
   return (
@@ -41,7 +67,8 @@ export default async function IdentifierPage({ params }: IdentifierPageProps) {
         <Card className="border shadow-md">
           <CardContent>
             <CodeHighlighter
-              initialCode={code.content}
+              tabs={code.codeTabs}
+              initialCode={activeTab.content}
               identifier={identifier}
             />
           </CardContent>
