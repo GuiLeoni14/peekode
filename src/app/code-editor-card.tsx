@@ -1,15 +1,45 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { CodeEditor } from "./code-editor";
 import { getInitialCode } from "./actions";
+import { Button } from "@/components/ui/button";
+import { TabCard } from "./tab-card";
+import { CreateTabDropdown } from "./create-tab-dropdown";
+import { CodeEditor } from "./code-editor";
 
-export async function CodeEditorCard() {
+interface CodeEditorCardProps {
+  activeTabName: string | string[] | undefined;
+}
+export async function CodeEditorCard({ activeTabName }: CodeEditorCardProps) {
   const initialCode = await getInitialCode();
+
+  const activeTab = activeTabName
+    ? initialCode?.codeTabs.find((tab) => tab.name === activeTabName)
+    : null;
+
+  if (activeTab) {
+    return (
+      <Card className="border shadow-md">
+        <CardContent>
+          <CodeEditor tab={activeTab} />
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
-    <Card className="border shadow-md">
-      <CardContent>
-        <CodeEditor initialCode={initialCode} />
-      </CardContent>
-    </Card>
+    <div className="flex flex-col gap-2 justify-end items-end">
+      {initialCode && initialCode?.codeTabs.length < 6 && (
+        <CreateTabDropdown>
+          <Button size="sm" variant="link">
+            {initialCode?.codeTabs.length}/6 Nova tab?
+          </Button>
+        </CreateTabDropdown>
+      )}
+      <div className="grid grid-cols-3 gap-4 w-full">
+        {initialCode?.codeTabs.map((tab) => {
+          return <TabCard tab={tab} key={tab.id} />;
+        })}
+      </div>
+    </div>
   );
 }
 

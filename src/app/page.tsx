@@ -7,8 +7,16 @@ import { Logo } from "@/components/logo";
 import { Credits } from "@/components/credits";
 import { CodeEditorCard, CodeEditorCardFallback } from "./code-editor-card";
 import { Suspense } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 
-export default async function Home() {
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+interface HomeProps {
+  searchParams: SearchParams;
+}
+export default async function Home(props: HomeProps) {
+  const searchParams = await props.searchParams;
+  const tabName = searchParams.tab;
+
   const session = await auth();
 
   return (
@@ -67,21 +75,49 @@ export default async function Home() {
               </Button>
             </form>
           )}
-        <Suspense fallback={<CodeEditorCardFallback />}>
-          <CodeEditorCard />
-        </Suspense>
+        {!session?.user
+          ? (
+            <Card>
+              <CardContent className="text-center py-6">
+                <p className="text-muted-foreground text-sm">
+                  Você precisa estar logado para editar seu código.
+                </p>
+                <p className="text-sm mt-2">
+                  Conecte-se com o GitHub para salvar, editar e compartilhar
+                  seus projetos.
+                </p>
+              </CardContent>
+            </Card>
+          )
+          : (
+            <Suspense fallback={<CodeEditorCardFallback />}>
+              <CodeEditorCard activeTabName={tabName} />
+            </Suspense>
+          )}
         <div className="text-center text-sm text-muted-foreground flex items-center justify-between">
           {session?.user.username
             ? (
               <a
                 className="flex items-center cursor-pointer"
-                href={`/${session?.user.username}`}
+                href={tabName
+                  ? `/${session?.user.username}?tab=${tabName}`
+                  : `/${session?.user.username}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Preview
                 <ExternalLink className="mx-2 size-4 dark:invert" />
-                peekode.vercel.app/{session?.user.username}
+                {tabName
+                  ? (
+                    <>
+                      peekode.vercel.app/{session?.user.username}?tab={tabName}
+                    </>
+                  )
+                  : (
+                    <>
+                      peekode.vercel.app/{session?.user.username}
+                    </>
+                  )}
               </a>
             )
             : <span></span>}
