@@ -35,7 +35,7 @@ export default async function IdentifierPage(
 ) {
   const { identifier } = await params;
   const searchParams = await props.searchParams;
-  const activeTabName = searchParams.tab;
+  const activeTabName = searchParams.tab as string;
 
   const code = await getCodeByIdentifier(identifier);
   if (!code) {
@@ -69,6 +69,7 @@ export default async function IdentifierPage(
             <CodeHighlighter
               tabs={code.codeTabs}
               initialCode={activeTab.content}
+              activeTabName={activeTabName}
               identifier={identifier}
             />
           </CardContent>
