@@ -7,6 +7,7 @@ import { Logo } from "@/components/logo";
 import { Credits } from "@/components/credits";
 import { CodeEditorCard, CodeEditorCardFallback } from "./code-editor-card";
 import { Suspense } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 interface HomeProps {
@@ -74,9 +75,25 @@ export default async function Home(props: HomeProps) {
               </Button>
             </form>
           )}
-        <Suspense fallback={<CodeEditorCardFallback />}>
-          <CodeEditorCard activeTabName={tabName} />
-        </Suspense>
+        {!session?.user
+          ? (
+            <Card>
+              <CardContent className="text-center py-6">
+                <p className="text-muted-foreground text-sm">
+                  Você precisa estar logado para editar seu código.
+                </p>
+                <p className="text-sm mt-2">
+                  Conecte-se com o GitHub para salvar, editar e compartilhar
+                  seus projetos.
+                </p>
+              </CardContent>
+            </Card>
+          )
+          : (
+            <Suspense fallback={<CodeEditorCardFallback />}>
+              <CodeEditorCard activeTabName={tabName} />
+            </Suspense>
+          )}
         <div className="text-center text-sm text-muted-foreground flex items-center justify-between">
           {session?.user.username
             ? (
