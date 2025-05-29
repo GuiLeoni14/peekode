@@ -33,12 +33,12 @@ export function CodeHighlighter(
   }
   useEffect(() => {
     const channel = supabase
-      .channel(`realtime code-snippets`)
+      .channel(`realtime code_tabs`)
       .on("postgres_changes", {
         event: "UPDATE",
         schema: "public",
-        filter: `identifier=eq.${identifier}`,
-        table: "code_snippets",
+        filter: `name=eq.${activeTabName}`,
+        table: "code_tabs",
       }, (payload) => {
         setActualCode(payload.new.content);
       })
@@ -47,7 +47,7 @@ export function CodeHighlighter(
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [identifier]);
+  }, [activeTabName]);
 
   return (
     <div className="w-full flex flex-col">
