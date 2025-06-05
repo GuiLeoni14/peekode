@@ -22,7 +22,7 @@ export function CreateTabDropdown({ children }: CreateTabDropdownProps) {
   const router = useRouter();
   const session = useSession();
 
-  const [tabName, setTabName] = useState("");
+  const [tabName, setTabName] = useState("minha-tab");
 
   const [{ errors, message, success }, handleSubmit, isPending] = useFormState(
     createCodeTabAction,
@@ -72,8 +72,8 @@ export function CreateTabDropdown({ children }: CreateTabDropdownProps) {
                   <XCircle className="w-4 h-4 text-red-500 shrink-0" />{" "}
                   {errors.tabName[0] ?? "Erro"}
                 </>
-              )}
-              {!isPending && message && (
+              )}  
+              {!isPending && message && !success && (
                 <>
                   <XCircle className="w-4 h-4 text-red-500" /> {message}
                 </>

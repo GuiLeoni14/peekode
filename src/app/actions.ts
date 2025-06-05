@@ -154,8 +154,13 @@ export async function createCodeTabAction(data: FormData) {
         name: result.data.tabName,
         content: '// Nova aba',
         codeSnippet: {
-          connect: {
-            identifier: session.user.username,
+          connectOrCreate: {
+            where: {
+              identifier: session.user.username,
+            },
+            create: {
+              identifier: session.user.username,
+            },
           }
         }
       }
