@@ -27,7 +27,7 @@ export async function CodeEditorCard({ activeTabName }: CodeEditorCardProps) {
 
   return (
     <div className="flex flex-col gap-2 justify-end items-end">
-      {initialCode?.codeTabs.length < 6 && (
+      {!initialCode  || initialCode?.codeTabs.length < 6 && (
         <CreateTabDropdown>
           <Button size="sm" variant="link">
             {initialCode?.codeTabs.length}/6 Nova tab?
