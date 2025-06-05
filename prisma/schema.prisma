@@ -27,7 +27,7 @@ model CodeSnippet {
 
 model CodeTab {
   id            String      @id @default(uuid())
-  name          String      @unique
+  name          String
   content       String?
   codeSnippetId String
   codeSnippet   CodeSnippet @relation(fields: [codeSnippetId], references: [id])
