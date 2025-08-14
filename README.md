@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Peekode
 
-## Getting Started
+Peekode é uma ferramenta web para **compartilhamento de trechos de código em tempo real**, desenvolvida para o ensino de programação. Permite que professores e alunos criem espaços de trabalho organizados, com URLs únicas baseadas no GitHub, promovendo maior praticidade e dinamismo no aprendizado.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Funcionalidades
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Autenticação via GitHub:** login rápido e seguro.
+- **Espaços de trabalho (Tabs):** múltiplos trechos de código organizados em diferentes tabs.
+- **Compartilhamento via URL:** links únicos para cada usuário.
+- **Syntax Highlighting:** exibição de código com cores e destaque de sintaxe.
+- **Atualização em tempo real:** alterações no código são refletidas imediatamente.
+- **Interface simples e objetiva:** foco na experiência do usuário.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tecnologias
 
-## Learn More
+- **Next.js:** framework web.
+- **Prisma:** ORM para PostgreSQL.
+- **PostgreSQL:** banco de dados relacional.
+- **Supabase:** gerenciamento de banco de dados e storage.
+- **OAuth via GitHub:** autenticação de usuários.
+- **React:** interface do usuário.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Acesso
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+A ferramenta está disponível em: [https://peekode.vercel.app](https://peekode.vercel.app)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Considerações
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Peekode centraliza e organiza o compartilhamento de trechos de código, tornando o processo de ensino mais ágil e acessível. Futuras melhorias incluem integração direta com editores de código via plugin, eliminando a necessidade de copiar e colar trechos manualmente.
+
+---
+
+## Referências
+
+- Gil, A. C. Como classificar as pesquisas. *Como elaborar projetos de pesquisa*, 4(1), 44-45, 2002.  
+- Grotta, Alexandre. Aprendizagem baseada em projeto ágil para educação em programação de computadores no ensino superior brasileiro, 2018.
